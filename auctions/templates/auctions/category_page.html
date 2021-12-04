@@ -1,0 +1,36 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h2>Category: {{ category_name }}</h2>
+
+{% for auction in auctions %}
+<a href="{% url 'listing' auction.title %}">
+    <div class='auction'>
+        <!-- check if the item has an image -->
+        {% if auction.image %}
+        <img src="/media/{{ auction.image }}" alt="{{ auction.title }}">
+        <!-- if not display not found image -->
+        {% else %}
+        <img src="/media/listing_imgs/img_not_found.png" alt="{{ auction.title }}">
+        {% endif %}
+
+        <div class='details'>
+            <h4>{{ auction.title }}</h4>
+            <div>
+                <b>Price: </b> ${{ auction.highest_bid }}
+            </div>
+
+            <div class='auc-desc'>
+                {{ auction.description }}
+            </div>
+
+            <div class='create-time'>
+                Created {{ auction.timestamp }}
+            </div>
+        </div>
+    </div>
+</a>
+{% empty %}
+<h2>Empty</h2>
+{% endfor %}
+{% endblock %}

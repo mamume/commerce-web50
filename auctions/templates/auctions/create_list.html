@@ -1,0 +1,47 @@
+{% extends "auctions/layout.html" %}
+
+
+{% block body %}
+<h2>Create Listing</h2>
+<form class="center-form" id='create-listing' action="{% url 'create_listing' %}" method='post'>
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name='title' autocomplete="off" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="description-text" class="form-label">Description</label>
+        <textarea class="form-control" id="description-text" rows="3" required name="desc"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="bid-start" class="form-label">Starting Bid</label>
+        <input type="number" class="form-control" id="bid-start" autocomplete="off" min="0" name='highest_bid'>
+    </div>
+
+    <div class="mb-3">
+        <label for="img-url" class="form-label">Image URL</label>
+        <input type="url" class="form-control" id="img-url" autocomplete="off" pattern="https://.*.(png|jpg|jpeg)"
+            name='img_url'>
+    </div>
+
+    <div class="mb-3">
+        <label for="cat" class="form-label">Category</label>
+        <div>
+            <select class="form-select" aria-label="Default select example" name='cat_id'>
+                <option selected disabled>Select Category</option>
+                {% for category in categories %}
+                <option value='{{ category.id }}'>{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="col-12 center">
+        <button type="submit" class="btn btn-primary">Create Listing</button>
+    </div>
+</form>
+
+{% endblock %}
